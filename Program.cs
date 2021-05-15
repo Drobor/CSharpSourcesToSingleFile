@@ -19,7 +19,6 @@ Searches through all .cs files in a given folder (recursive) and aggregates them
         public string Directory { get; } = ".";
 
         [Required]
-        [FileNotExists]
         [FileExtensions(Extensions = ".cs")]
         [Option(Description = "Single file name the code will be merged into", ShortName = "o")]
         public string Output { get; }
@@ -61,6 +60,8 @@ Searches through all .cs files in a given folder (recursive) and aggregates them
 
             using (var writer = File.CreateText(outputPath))
             {
+                writer.WriteLine($"//Bundled {DateTime.Now}");
+
                 foreach (var line in usings)
                     writer.WriteLine(line);
 
